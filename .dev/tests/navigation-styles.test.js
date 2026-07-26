@@ -83,7 +83,7 @@ test("shared navigation styles define active and expanded states", () => {
   assertIncludesUtilities(sublink, [
     "font-medium",
     "hover:bg-hover-faint",
-    "rounded-lg",
+    "rounded-xl",
   ]);
   assertIncludesUtilities(activeSublink, [
     "text-brand",
@@ -108,7 +108,7 @@ test("shared navigation styles own accordion animation without a guide rail", ()
     "after:transition-[transform,opacity]",
     "after:duration-[250ms]",
   ]);
-  assert.match(toggle, /arrow-right\.svg/);
+  assert.match(toggle, /var\(--icon-arrow-right\)/);
   assertIncludesUtilities(region, [
     "grid",
     "grid-rows-[0fr]",
@@ -212,13 +212,31 @@ test("mega-menu reveal and retract share the page-top origin", () => {
   assert.doesNotMatch(headerLift ?? "", /bg-mega-menu-bg/);
 });
 
+test("theme flips repaint the bar in the same frame as the page", () => {
+  const headerDeclaration = layoutStyles.match(
+    /^header \{\s*@apply ([^;]+);/m,
+  )?.[1];
+
+  assert.ok(headerDeclaration, "Missing header root declaration");
+  assertIncludesUtilities(headerDeclaration, ["bg-bg", "sticky"]);
+  // A colour transition on the bar itself would ease its bg/text over
+  // --mega-menu-duration on every data-darkmode flip, lagging the bar behind
+  // the untransitioned page in all three nav modes. The mega-menu wipe colour
+  // lives on .desktop-menu-sheet, which carries its own transition.
+  assert.doesNotMatch(headerDeclaration, /\btransition/);
+});
+
 test("mega-menu category masks use Tailwind arbitrary utilities", () => {
   const title = getBlock(layoutStyles, "& .desktop-nav-title");
   const icon = getBlock(title, "&::before");
 
   assert.match(
     icon,
-    /@apply[^;]*\[mask:var\(--menu-icon,url\(["']@assets\/icons\/category\.svg["']\)\)_center\/contain_no-repeat\]/,
+    /@apply[^;]*\[mask:var\(--menu-icon,var\(--icon-category\)\)_center\/contain_no-repeat\]/,
   );
+  // The default lives in the var() fallback only. Declaring --menu-icon on
+  // the title compiles into a (0,5,1) selector chain that outranks every
+  // .desktop-nav-title[data-section=…] (0,2,0) mapping in _nav.css.
+  assert.doesNotMatch(title, /--menu-icon:/);
   assert.doesNotMatch(layoutStyles, /^\s*mask\s*:/m);
 });

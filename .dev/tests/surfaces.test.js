@@ -114,7 +114,10 @@ test("mega-menu reveal is compositor-only and the frost never overlaps it", () =
   // The curtain carries the blur permanently (Apple's globalnav-curtain) and
   // fades it with opacity/visibility. Close must start that fade immediately;
   // delaying the curtain left blur visible after the sheet had collapsed.
-  assert.ok(overlay.includes("max-md:backdrop-blur-lg"), "mobile overlay blur");
+  assert.ok(
+    !overlay.includes("max-md:backdrop-blur-lg"),
+    "opaque mobile overlay must not blur hidden pixels",
+  );
   const curtain = overlay
     .split("\n")
     .find((l) => l.includes("bg-mega-menu-scrim"));
@@ -164,7 +167,8 @@ test("content dropdowns stay above the closed header and below the open mega-men
       /\[data-nav-type="mega-menu"\]\s*&:has\([\s\S]*?\.desktop-menu-container[\s\S]*?\.active[\s\S]*?\)\s*\{\s*@apply\s+([^;]+);/,
     )?.[1] ?? "";
   const dropdownRule = dropdown.match(/&\.dropdown\s*\{\s*@apply\s+([^;]+);/)?.[1] ?? "";
-  const messageRule = message.match(/\.alert-message\s*\{\s*@apply\s+([^;]+);/)?.[1] ?? "";
+  const messageRule =
+    message.match(/\.alert-message\s*\{[\s\S]*?@apply\s+([^;]+);/)?.[1] ?? "";
   const overlayRule =
     overlay.match(/& \.desktop-menu-overlay\s*\{\s*@apply\s+([^;]+);/)?.[1] ?? "";
 
