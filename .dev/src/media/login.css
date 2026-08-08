@@ -103,11 +103,14 @@ body[data-bg] .login-card {
   @apply via-hairline h-px w-full animate-[divider-in_0.7s_cubic-bezier(0.16,1,0.3,1)_0.1s_both] border-0 bg-linear-to-r from-transparent to-transparent;
 }
 
+/* The logo fills the slot bare — no plate behind it. `flex` is load-bearing:
+   this sheet ships no Preflight, so the img is display:inline and would pick
+   up a baseline descender gap; being a flex item blockifies it. */
 .login-logo {
-  @apply bg-brand-subtle ring-brand-subtle flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ring-1;
+  @apply flex size-11 shrink-0 items-center justify-center;
 
   & img {
-    @apply h-6 w-6;
+    @apply size-full object-contain;
   }
 }
 
