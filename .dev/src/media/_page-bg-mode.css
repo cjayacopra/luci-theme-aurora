@@ -27,7 +27,10 @@ body[data-bg] {
      per-plugin knowledge. 55% is a deliberate internal constant, not a
      fourth tunable. */
   & #maincontent {
-    @apply relative [background:color-mix(in_srgb,var(--bg)_55%,transparent)];
+    /* Deliberate: the wash's hard 0px corners show as a raw rectangle in
+       light mode (--bg wash stands out against the wallpaper); dark mode
+       hides them. Rounded like every other surface. */
+    @apply relative rounded-2xl [background:color-mix(in_srgb,var(--bg)_55%,transparent)];
   }
 
   & header,

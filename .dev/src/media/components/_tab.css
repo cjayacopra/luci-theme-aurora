@@ -6,7 +6,7 @@
   @apply border-hairline relative flex items-center gap-0 overflow-x-auto border-b;
 
   & a {
-    @apply text-text-muted hover:text-text block px-8 py-4 text-center text-sm font-medium whitespace-nowrap transition-colors duration-150 hover:no-underline;
+    @apply text-text block px-8 py-4 text-center text-sm font-medium whitespace-nowrap transition-colors duration-150 hover:no-underline;
   }
 
   & > li.active {
