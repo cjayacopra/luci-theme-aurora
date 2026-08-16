@@ -1,0 +1,2 @@
+overrides:
+  '@eamonxg/luci-theme-tokens': link:../../luci-theme-tokens

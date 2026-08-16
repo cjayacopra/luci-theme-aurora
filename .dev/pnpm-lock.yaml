@@ -4,13 +4,16 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@eamonxg/luci-theme-tokens': link:../../luci-theme-tokens
+
 importers:
 
   .:
     devDependencies:
       '@eamonxg/luci-theme-tokens':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: link:../../luci-theme-tokens
+        version: link:../../luci-theme-tokens
       '@tailwindcss/vite':
         specifier: ^4.1.11
         version: 4.3.2(vite@7.3.1(@types/node@24.10.9)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.0))
@@ -43,9 +46,6 @@ importers:
         version: 7.3.1(@types/node@24.10.9)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.0)
 
 packages:
-
-  '@eamonxg/luci-theme-tokens@2.0.0':
-    resolution: {integrity: sha512-LSPR6fW5iDN0r4eEfLLVirIgjJxUN8L1uJ3hZDHZRPbHtRE8v21pJSMhZoQKerCXUJx3spZc3W3r9f+baw3Jqw==}
 
   '@esbuild/aix-ppc64@0.27.2':
     resolution: {integrity: sha512-GZMB+a0mOMZs4MpDbj8RJp4cw+w1WV5NYD6xzgvzUJ5Ek2jerwfO2eADyI6ExDSUED+1X8aMbegahsJi+8mgpw==}
@@ -767,10 +767,6 @@ packages:
         optional: true
 
 snapshots:
-
-  '@eamonxg/luci-theme-tokens@2.0.0':
-    dependencies:
-      colorjs.io: 0.6.1
 
   '@esbuild/aix-ppc64@0.27.2':
     optional: true
