@@ -23,7 +23,10 @@ test("production assets stay within raw-transfer budgets", () => {
   // binds.
   assert.ok(main <= 193_000, "main.css exceeds 193 KB");
   assert.ok(login <= 12_000, "login.css exceeds 12 KB");
-assert.ok(menu <= 21_500, "menu-aurora.js exceeds 21.5 KB");
+  // 22K: palette recents (record on pick, pure-LRU browse order, storage
+  // validation) added ~0.8 KB and the ">" logout command ~0.2 KB. The total
+  // budget below moved by the same amount.
+  assert.ok(menu <= 22_000, "menu-aurora.js exceeds 22 KB");
   // 15K: the expiry gate, readonly folding, menu.d node css, wildcard
   // actions, progress bar, visibility gate and contract check added ~3 KB
   // over the first cut; the total-transfer budget below moved by the same
@@ -33,10 +36,12 @@ assert.ok(menu <= 21_500, "menu-aurora.js exceeds 21.5 KB");
   // derived build output -- bound it alone so a future swap can't silently
   // ship a heavier trace, and leave it out of the combined sums below so
   // those keep guarding the assets that actually grow with the build.
+  // (Upstream's ~16 KB logo rides inside its sums; ours is ~800 KB, which
+  // would drown any sum-based growth guard.)
   assert.ok(logo <= 850_000, "logo.svg exceeds 850 KB");
   assert.ok(
-    main + menu + router + font <= 267_000,
-    "admin assets exceed 267 KB",
+    main + menu + router + font <= 267_500,
+    "admin assets exceed 267.5 KB",
   );
   assert.ok(login + font <= 55_000, "login assets exceed 55 KB");
 });
