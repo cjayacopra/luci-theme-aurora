@@ -31,7 +31,10 @@ test("production assets stay within raw-transfer budgets", () => {
   // actions, progress bar, visibility gate and contract check added ~3 KB
   // over the first cut; the total-transfer budget below moved by the same
   // amount. Mirrored in the perf skill's aurora-budgets.md.
-  assert.ok(router <= 15_000, "router-aurora.js exceeds 15 KB");
+  // 16K: the router now ships from @eamonxg/luci-theme-devkit — theme hooks
+  // as document events, the title format read off the document, and the
+  // inner-scroller restoration shared with shadcn (+0.8 KB raw, +0.3 KB gz).
+  assert.ok(router <= 16_000, "router-aurora.js exceeds 16 KB");
   // The branded logo is a fixed brand asset (auto-traced source), not
   // derived build output -- bound it alone so a future swap can't silently
   // ship a heavier trace, and leave it out of the combined sums below so

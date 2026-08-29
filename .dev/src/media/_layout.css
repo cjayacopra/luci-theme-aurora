@@ -556,7 +556,7 @@ body[data-nav-type="sidebar"] {
    trickling until commit (so a slow render keeps visibly moving), then
    filled, faded and removed from the DOM. Only width and opacity move.
    Reduced motion drops the transitions, not the bar. */
-#aurora-nav-progress {
+#luci-nav-progress {
   @apply from-progress-start to-progress-end pointer-events-none fixed top-0 left-0 z-80 h-0.5 w-0 bg-linear-to-r transition-[width] duration-300 ease-out;
 
   &[data-state="done"] {
@@ -566,7 +566,7 @@ body[data-nav-type="sidebar"] {
 
 /* Router announcement (router.md): the new page's title for screen
    readers after a same-document swap, which fires no load event. */
-#aurora-nav-status {
+#luci-nav-status {
   @apply sr-only;
 }
 
@@ -609,18 +609,6 @@ body[data-nav-type="sidebar"] {
       }
     }
 
-    #content_syslog {
-      @apply m-2 max-md:m-1;
-
-      & > div {
-        @apply flex flex-wrap items-baseline gap-x-2 max-md:gap-x-1.5;
-        & > .cbi-input-select,
-        & > .cbi-input-text {
-          @apply max-md:min-w-45;
-        }
-      }
-    }
-
     & div[style] {
       & > svg {
         @apply dark:!bg-surface;
@@ -652,17 +640,6 @@ body[data-nav-type="sidebar"] {
     .zone-dest {
       @apply flex flex-1 flex-col gap-1.5;
     }
-  }
-
-  #syslog,
-  #log_textarea {
-    @apply w-full font-mono text-xs leading-snug;
-  }
-
-  #syslog {
-    /* Explicit border color: bare `border` falls back to currentColor
-       (near-black text) in Tailwind v4. */
-    @apply bg-surface-sunken border-hairline text-text rounded-3xl border p-6 shadow-lg max-md:p-3;
   }
 }
 
