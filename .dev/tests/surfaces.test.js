@@ -159,7 +159,6 @@ test("content dropdowns stay above the closed header and below the open mega-men
   const layer = (value) => ["z", value].join("-");
   const layout = read("../src/media/_layout.css");
   const dropdown = read("../src/media/components/_dropdown.css");
-  const message = read("../src/media/components/_message.css");
   const overlay = read("../src/media/components/_overlay.css");
   const headerRule = layout.match(/^header\s*\{\s*@apply\s+([^;]+);/m)?.[1] ?? "";
   const activeHeaderRule =
@@ -167,12 +166,11 @@ test("content dropdowns stay above the closed header and below the open mega-men
       /\[data-nav-type="mega-menu"\]\s*&:has\([\s\S]*?\.desktop-menu-container[\s\S]*?\.active[\s\S]*?\)\s*\{\s*@apply\s+([^;]+);/,
     )?.[1] ?? "";
   const dropdownRule = dropdown.match(/&\.dropdown\s*\{\s*@apply\s+([^;]+);/)?.[1] ?? "";
-  const messageRule =
-    message.match(/\.alert-message\s*\{[\s\S]*?@apply\s+([^;]+);/)?.[1] ?? "";
   const overlayRule =
     overlay.match(/& \.desktop-menu-overlay\s*\{\s*@apply\s+([^;]+);/)?.[1] ?? "";
 
-  assert.ok(messageRule.includes(layer(30)), `message layer changed: ${messageRule}`);
+  // .alert-message is in-flow since the scroll-to-head fix (the sticky banner
+  // hid the log's scroll-to-tail button), so it has no z-index in this ladder.
   assert.ok(headerRule.includes(layer(40)), `closed header layer changed: ${headerRule}`);
   assert.ok(dropdownRule.includes(layer(50)), `dropdown layer changed: ${dropdownRule}`);
   assert.ok(overlayRule.includes(layer(60)), `menu overlay layer changed: ${overlayRule}`);
