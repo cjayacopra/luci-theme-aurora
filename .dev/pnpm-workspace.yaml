@@ -11,3 +11,6 @@
 # package.json must stay in sync with the fork's package.json (currently 3.0.0).
 overrides:
   '@eamonxg/luci-theme-tokens': link:../../luci-theme-tokens/packages/tokens
+
+allowBuilds:
+  esbuild: true

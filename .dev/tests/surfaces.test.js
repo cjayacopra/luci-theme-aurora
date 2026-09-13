@@ -169,8 +169,14 @@ test("content dropdowns stay above the closed header and below the open mega-men
   const overlayRule =
     overlay.match(/& \.desktop-menu-overlay\s*\{\s*@apply\s+([^;]+);/)?.[1] ?? "";
 
-  // .alert-message is in-flow since the scroll-to-head fix (the sticky banner
-  // hid the log's scroll-to-tail button), so it has no z-index in this ladder.
+  // The alert banner stays in flow (d747e5f): ui.addNotification() inserts
+  // banners as siblings, so a sticky one would stack on top of the next and
+  // pin opaque surface over scroll targets. In flow it needs no layer at all.
+  assert.ok(messageRule, "alert-message rule not found");
+  assert.ok(
+    !/\b(sticky|fixed)\b/.test(messageRule) && !/\bz-/.test(messageRule),
+    `alert banner must stay in flow with no layer: ${messageRule}`,
+  );
   assert.ok(headerRule.includes(layer(40)), `closed header layer changed: ${headerRule}`);
   assert.ok(dropdownRule.includes(layer(50)), `dropdown layer changed: ${dropdownRule}`);
   assert.ok(overlayRule.includes(layer(60)), `menu overlay layer changed: ${overlayRule}`);
