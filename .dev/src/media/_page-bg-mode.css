@@ -48,3 +48,20 @@ body[data-bg] {
     @apply [background:color-mix(in_srgb,var(--surface)_var(--main-bg-alpha,67%),transparent)];
   }
 }
+
+/*
+  Shipped-dark marker (header.ut): the default wallpaper is the dark Kanagawa
+  Dragon canvas, only sensible under dark-mode frost. In light mode hide it
+  and go opaque, so light mode stays plain Kanagawa Lotus (the dashboard
+  look) — sidebar, cards and chrome all match. Dark mode and custom uploads
+  are untouched (they never carry this marker). data-darkmode lives on
+  <html> (inline theme script), hence the html:not([data-darkmode="true"])
+  guard — body never carries it.
+*/
+html:not([data-darkmode="true"]) body[data-bg="shipped-dark"] {
+  --main-bg-alpha: 100%;
+
+  & .page-bg {
+    display: none;
+  }
+}

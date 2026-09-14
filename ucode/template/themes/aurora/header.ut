@@ -50,6 +50,13 @@
 		const u = m ? m[1] : null;
 		return (u && index(u, 'data:') != 0) ? u : null;
 	}
+	// The shipped ShiranekoWrt wallpaper is the dark Kanagawa Dragon canvas;
+	// under a light-mode cream frost it drags every surface into an unreadable
+	// mid-tone. Mark that default URL so the stylesheets can hide it in light
+	// mode (data-bg="shipped-dark" + html:not([data-darkmode="true"]));
+	// custom uploads (any other URL) keep plain data-bg and current behaviour.
+	const bg_is_shipped_dark = (blank_page ? tokens.struct_login_bg : tokens.struct_main_bg)
+		== "url('/luci-static/aurora/images/background.png')";
 
 	let token_css_light = '', token_css_dark = '';
 	for (let key, val in tokens) {
@@ -224,7 +231,7 @@
 		{% endif %}
 	</head>
 
-	<body class="lang_{{ dispatcher.lang }}" data-page="{{ entityencode(page, true) }}" data-nav-type="{{ nav_type }}" data-asset-version="{# PKG_VERSION #}"{% if (length(patch_all)): %} data-patches="{{ entityencode(join(' ', patch_all), true) }}"{% endif %}{% if (blank_page ? tokens.struct_login_bg : tokens.struct_main_bg): %} data-bg{% endif %}>
+	<body class="lang_{{ dispatcher.lang }}" data-page="{{ entityencode(page, true) }}" data-nav-type="{{ nav_type }}" data-asset-version="{# PKG_VERSION #}"{% if (length(patch_all)): %} data-patches="{{ entityencode(join(' ', patch_all), true) }}"{% endif %}{% if (blank_page ? tokens.struct_login_bg : tokens.struct_main_bg): %} data-bg="{% if (bg_is_shipped_dark): %}shipped-dark{% endif %}"{% endif %}>
 		{% if (!blank_page): %}
 		{% if (tokens.struct_main_bg): %}
 		<div class="page-bg" aria-hidden="true"></div>

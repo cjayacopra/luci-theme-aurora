@@ -91,6 +91,19 @@ body[data-bg] .login-card {
   }
 }
 
+/* Shipped-dark marker (header.ut): the default wallpaper is the dark
+   Kanagawa Dragon canvas. In light mode hide it and make the login card
+   fully opaque, so light mode stays plain Kanagawa Lotus; dark mode and
+   custom uploads are untouched. data-darkmode lives on <html> (inline
+   theme script), hence the html:not([data-darkmode="true"]) guard. */
+html:not([data-darkmode="true"]) body[data-bg="shipped-dark"] {
+  --login-bg-alpha: 100%;
+
+  & .page-bg {
+    display: none;
+  }
+}
+
 .login-card {
   @apply bg-surface flex flex-col gap-7 rounded-4xl p-14 shadow-lg max-md:rounded-3xl max-md:p-9;
 }
