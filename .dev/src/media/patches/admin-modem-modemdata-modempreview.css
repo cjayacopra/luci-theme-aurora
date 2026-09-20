@@ -6,7 +6,58 @@
 */
 
 [data-page="admin-modem-modemdata-modempreview"] {
-  & .ifacebox-body .ifacebadge {
-    width: auto !important;
+  /* The info cards (Connection / SIM Card / Modem Information / Cell
+     Information) render every row with inline font-size/margin styles, so
+     compaction needs !important to move them. Density only — the card
+     language (radius, shadow, surface tokens) stays the theme's. */
+  .ifacebox {
+    /* Grid gap owns the spacing; the stock 4px margin would double it. */
+    margin: 0 !important;
+  }
+
+  .ifacebox-head.port-label {
+    padding: 5px 12px !important;
+    font-size: 13px;
+    font-weight: 600 !important;
+    line-height: 1.35;
+  }
+
+  .ifacebox-body {
+    padding: 6px 12px 10px !important;
+    gap: 2px;
+    /* The base centres rows vertically (`.dev/src/media/components/_card.css`),
+       which leaves a strip of empty surface between the head and the first
+       row — visible because the cards are now short enough to make the gap
+       read. Top-align to follow the app's own visual flow. */
+    justify-content: flex-start;
+
+    /* Rows: the app stamps font-size inline but leaves line-height alone, so
+       the inherited 20px lh wastes ~5px per row. Some rows carry no inline
+       margin at all (the divider's last row), hence the blanket div rule. */
+    div {
+      line-height: 1.4;
+    }
+
+    div[style*="margin-bottom"] {
+      margin-bottom: 2px !important;
+    }
+
+    /* The sub-block dividers (Sent/Received, IMSI/ICCID) keep their top
+       border — only the inline 8px cushion above it gets tightened. */
+    div[style*="border-top"] {
+      padding-top: 5px !important;
+    }
+
+    .ifacebadge {
+      width: auto !important;
+      gap: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+
+      /* The app stamps 32px inline on the icon; 18px matches the 12px rows. */
+      img {
+        height: 18px !important;
+      }
+    }
   }
 }
